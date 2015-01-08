@@ -6,7 +6,7 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/08 14:49:31 by achauvea          #+#    #+#             */
-/*   Updated: 2015/01/08 14:53:56 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/08 23:16:23 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,39 +107,18 @@ int		ft_linksize(t_elem *list)
 	maxsize = 0;
 	while (list->nxt)
 	{
-		i = ft_countnum(list->nlink);
+		i = ft_countnum(list->st_nlink);
 		if (maxsize < i)
 			maxsize = i;
 		list = list->nxt;
 	}
-	i = ft_countnum(list->nlink);
+	i = ft_countnum(list->st_nlink);
 	if (maxsize < i)
 		maxsize = i;
 	return (maxsize);
 }
 
-t_size	*ft_calcsize(t_elem *list, t_opt *opt)
-{
-	t_size	*size;
-
-	size = NULL;
-	if (list && arg->l == 1)
-	{
-		if (!(size = (struct s_size*)ft_memalloc(sizeof(struct s_size))))
-		{
-			ft_error(0, "Malloc");
-			return (NULL);
-		}
-		list = ft_maxsize(list, size);
-		size->groupsize = ft_groupsize(list);
-		size->usersize = ft_usersize(list);
-		size->linksize = ft_linksize(list);
-		ft_calcmm(list, size);
-	}
-	return (size);
-}
-
-t_list	*ft_maxsize(t_elem *list, t_size *size)
+t_elem	*ft_maxsize(t_elem *list, t_size *size)
 {
 	int		maxsize;
 	int		i;
@@ -163,4 +142,22 @@ t_list	*ft_maxsize(t_elem *list, t_size *size)
 		maxsize = i;
 	size->size = maxsize;
 	return (first);
+}
+
+t_size	*ft_calcsize(t_elem *list, t_opt *opt)
+{
+	t_size	*size;
+
+	size = NULL;
+	if (list && opt->l)
+	{
+		if ((size = (t_size*)ft_memalloc(sizeof(t_size))) == NULL)
+			ft_error("ft_ls", "malloc", 1);
+		list = ft_maxsize(list, size);
+		size->groupsize = ft_groupsize(list);
+		size->usersize = ft_usersize(list);
+		size->linksize = ft_linksize(list);
+		ft_calcmm(list, size);
+	}
+	return (size);
 }

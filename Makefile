@@ -6,7 +6,7 @@
 #    By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/10 08:23:40 by achauvea          #+#    #+#              #
-#    Updated: 2015/01/08 14:55:27 by achauvea         ###   ########.fr        #
+#    Updated: 2015/01/08 22:50:16 by achauvea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@ SRC		=	main.c 			\
 			ls_elem.c		\
 			ls_struct.c		\
 			ls_print.c		\
+			ls_print2.c		\
+			ls_print3.c		\
 			ls_file.c		\
 			ls_recursive.c	\
 			ls_size.c		\

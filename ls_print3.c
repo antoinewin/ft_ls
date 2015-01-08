@@ -6,7 +6,7 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/08 13:17:02 by achauvea          #+#    #+#             */
-/*   Updated: 2015/01/08 13:17:13 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/08 23:01:18 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	ft_print_time(time_t date)
 	ft_putchar(' ');
 }
 
-void	ft_print_total(t_size *size, t_arg *arg)
+void	ft_print_total(t_size *size, t_opt *opt)
 {
-	if (arg->l == 1)
+	if (opt->l)
 	{
 		ft_putstr("total ");
 		ft_putnbr(size->total);

@@ -6,7 +6,7 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/17 16:28:07 by achauvea          #+#    #+#             */
-/*   Updated: 2015/01/08 15:25:01 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/08 15:47:19 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int		main(int ac, char **av)
 		y = -1;
 		while (par[++y])
 		{
-			if (avc > 1)
+			if ((ac - i) > 1)
 				ft_putchar('\n');
 			ls_dir_list(av[par[y]], opt, (ac - i), ft_istrchr(av[par[y]]));
 		}

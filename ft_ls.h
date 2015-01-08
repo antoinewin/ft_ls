@@ -6,7 +6,7 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/17 16:32:41 by achauvea          #+#    #+#             */
-/*   Updated: 2015/01/08 14:54:43 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/08 23:39:22 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@
 # include <string.h>
 # include <unistd.h>
 # include <errno.h>
+
+# define DT_UNKNOWN	0
+# define DT_FIFO	1
+# define DT_CHR		2
+# define DT_DIR		4
+# define DT_BLK		6
+# define DT_REG		8
+# define DT_LNK		10
+# define DT_SOCK	12
+# define DT_WHT		14
+# define LS_MAJOR(x) ((int32_t)(((u_int32_t)(x) >> 24) & 0xff))
+# define LS_MINOR(x) ((int32_t)((x) & 0xffffff))
 
 typedef struct	s_opt
 {
@@ -46,6 +58,8 @@ typedef struct	s_elem
 	mode_t			st_mode;
 	off_t			st_size;
 	nlink_t			st_nlink;
+	quad_t			st_blocks;
+	dev_t			st_rdev;
 	char			*username;
 	char			*groupname;
 }				t_elem;
@@ -80,5 +94,4 @@ void			ft_print_majmin(t_elem *list, t_size *size);
 void			ls_r_on(t_elem *list, t_opt *opt);
 void			ls_r_off(t_elem *list, t_opt *opt);
 void			ls_recursive(t_elem *list, t_opt *opt);
-void			ft_cut_ctime(char *line);
 #endif

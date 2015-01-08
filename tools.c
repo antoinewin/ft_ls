@@ -6,57 +6,57 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/25 14:06:35 by achauvea          #+#    #+#             */
-/*   Updated: 2015/01/08 13:33:04 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/08 23:41:25 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	ft_cut_ctime(char *time)
+int		ft_maybedir(t_elem *list)
 {
-	int		off;
-
-	off = 1;
-	while (*time)
-	{
-		if (*time == ' ')
-		{
-			time++;
-			break ;
-		}
-		time++;
-	}
-	while (*time)
-	{
-		if (*time == ':' && off)
-			off = 0;
-		else if (*time == ':')
-			break ;
-		ft_putchar(*time);
-		time++;
-	}
+	if (S_ISLNK(list->st_mode))
+		return (DT_LNK);
+	if (S_ISREG(list->st_mode))
+		return (DT_REG);
+	if (S_ISCHR(list->st_mode))
+		return (DT_CHR);
+	if (S_ISBLK(list->st_mode))
+		return (DT_BLK);
+	if (S_ISFIFO(list->st_mode))
+		return (DT_FIFO);
+	if (S_ISSOCK(list->st_mode))
+		return (DT_SOCK);
+	if (S_ISDIR(list->st_mode))
+		return (DT_DIR);
+	else
+		return (DT_UNKNOWN);
 }
 
-void	ft_isDir(t_elem *elem)
+void	ft_isDir(t_elem *elem, struct dirent *dir)
 {
-	DIR		*dir;
+	DIR		*directory;
 
-	errno = 0;
 	if (elem)
 	{
-		if ((dir = opendir(elem->path)) == NULL)
-		{
-			if (errno == ENOTDIR)
-				elem->sub = 0;
-			else
-				elem->sub = 1;
-		}
-		else if (S_ISLNK(elem->st_mode))
-			elem->sub = 0;
+		if (dir && dir->d_type == DT_LNK)
+			elem->sub = DT_LNK;
+		else if (dir && dir->d_type == DT_DIR)
+			elem->sub = DT_DIR;
+		else if (dir && dir->d_type == DT_CHR)
+			elem->sub = DT_CHR;
+		else if (dir && dir->d_type == DT_BLK)
+			elem->sub = DT_BLK;
+		else if (dir && dir->d_type == DT_SOCK)
+			elem->sub = DT_SOCK;
 		else
 		{
-			elem->sub = 1;
-			closedir(dir);
+			if ((elem->sub = ft_maybedir(elem)) != DT_UNKNOWN)
+				return ;
+			else if ((directory = opendir(elem->path)))
+			{
+				elem->sub = DT_DIR;
+				closedir(directory);
+			}
 		}
 	}
 }
@@ -90,7 +90,7 @@ void	ls_add_elem(char *path, t_elem *elem, struct stat *buf)
 	free(tmp);
 	stat(elem->path, buf);
 	elem->st_mode = buf->st_mode;
-	ft_isDir(elem);
+	ft_isDir(elem, buf);
 	if (elem->sub == 1)
 	{
 		lstat(elem->path, buf);
@@ -99,6 +99,8 @@ void	ls_add_elem(char *path, t_elem *elem, struct stat *buf)
 			elem->sub = 0;
 	}
 	elem->st_nlink = buf->st_nlink;
+	elem->st_blocks = buf->st_blocks;
+	elem->st_rdev = buf->st_rdev;
 	elem->date = buf->st_mtime;
 	ft_getuid(elem, buf->st_uid, buf->st_gid);
 	elem->st_size = buf->st_size;

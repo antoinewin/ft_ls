@@ -6,7 +6,7 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/08 16:37:26 by achauvea          #+#    #+#             */
-/*   Updated: 2014/12/19 12:10:01 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/08 23:04:38 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void			ft_putchar(char c);
 void			ft_putchar_fd(char c, int fd);
 void			ft_putstr(char const *s);
 void			ft_putstr_fd(char const *s, int fd);
+void			ft_putnstr(char *str, int n);
 void			ft_putnbr(int n);
 void			ft_putnbr_fd(int n, int fd);
 void			ft_putendl(char const *s);
@@ -86,4 +87,6 @@ void			ft_errors(char *fonction, char *msg, int ex);
 void			ft_perror(char *name, char *error, int iexit);
 double			ft_abs(double i);
 int				ft_cntchar(char *line, char c);
+int				ft_countnum(int n);
+void			ft_strsupr(char *s, size_t n);
 #endif

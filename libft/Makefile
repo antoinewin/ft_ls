@@ -6,7 +6,7 @@
 #    By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/08/09 21:01:11 by achauvea          #+#    #+#              #
-#    Updated: 2014/12/19 12:09:33 by achauvea         ###   ########.fr        #
+#    Updated: 2015/01/08 23:29:25 by achauvea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC =		ft_putchar.c	\
 			ft_putchar_fd.c	\
 			ft_putstr.c		\
 			ft_putstr_fd.c	\
+			ft_putnstr.c	\
 			ft_putnbr.c		\
 			ft_putnbr_fd.c	\
 			ft_putendl.c	\
@@ -67,6 +68,7 @@ SRC =		ft_putchar.c	\
 			ft_strtrim.c	\
 			ft_strsplit.c	\
 			ft_strdupc.c	\
+			ft_strcpyc.c	\
 			ft_strlenc.c	\
 			ft_itoa.c		\
 			ft_lstnew.c		\
@@ -81,6 +83,8 @@ SRC =		ft_putchar.c	\
 			get_next_line.c	\
 			ft_abs.c		\
 			ft_cntchar.c	\
+			ft_countnum.c	\
+			ft_strsupr.c	\
 
 OBJ = $(SRC:.c=.o)
 
