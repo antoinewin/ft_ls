@@ -6,7 +6,7 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/17 16:28:07 by achauvea          #+#    #+#             */
-/*   Updated: 2015/01/08 15:47:19 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/13 12:03:53 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_elem	*ls_on_list(struct dirent *entry, t_opt *opt, t_elem *list, char *path)
 	if ((buf = (struct stat*)ft_memalloc(sizeof(struct stat))) == NULL)
 		ft_error("ft_ls", "malloc", 1);
 	elem->name = ft_strcpy(elem->name, entry->d_name);
-	ls_add_elem(path, elem, buf);
+	ls_add_elem(path, elem, buf, entry);
 	list = ls_place_elem(elem, list, opt);
 	free(buf);
 	return (list);

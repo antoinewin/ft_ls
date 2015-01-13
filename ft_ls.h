@@ -6,7 +6,7 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/17 16:32:41 by achauvea          #+#    #+#             */
-/*   Updated: 2015/01/08 23:39:22 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/13 10:25:25 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ typedef struct	s_size
 }				t_size;
 t_opt			*ft_create_opt(void);
 t_elem			*ft_create_elem(void);
-void			ls_add_elem(char *path, t_elem *elem, struct stat *buf);
+t_size			*ft_create_size(void);
+void			ls_add_elem(char *path, t_elem *elem, struct stat *buf, struct dirent *entry);
 t_elem			*ls_place_elem(t_elem *elem, t_elem *list, t_opt *opt);
 int				ls_arguments(int ac, char **av, t_opt *opt);
 int				ls_dir_list(char *path, t_opt *opt, int ac, char *name);
@@ -84,7 +85,7 @@ DIR				*ls_open_file(char *name, char *path);
 void			ft_print(t_size *size, t_elem *list, t_opt *opt);
 void			ft_print_file(int *file, char **av, t_opt *opt);
 void			ft_print_permi(mode_t st_mode, int sub);
-void			ft_print_int(int size, unsigned int toprint);
+void			ft_print_int(unsigned int toprint, int size);
 void			ft_print_gn(char *name, int size);
 void			ft_print_lnk(t_elem *list);
 void			ft_print_time(time_t date);

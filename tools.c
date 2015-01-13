@@ -6,7 +6,7 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/25 14:06:35 by achauvea          #+#    #+#             */
-/*   Updated: 2015/01/08 23:41:25 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/13 10:58:56 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,23 +81,21 @@ int		ft_getuid(t_elem *elem, uid_t st_uid, gid_t st_gid)
 	return (1);
 }
 
-void	ls_add_elem(char *path, t_elem *elem, struct stat *buf)
+void	ls_add_elem(char *path, t_elem *elem, struct stat *buf, struct dirent *entry)
 {
 	char	*tmp;
 
 	tmp = ft_strjoin(path, "/");
 	elem->path = ft_strjoin(tmp, elem->name);
 	free(tmp);
-	stat(elem->path, buf);
-	elem->st_mode = buf->st_mode;
-	ft_isDir(elem, buf);
-	if (elem->sub == 1)
+	if (lstat(elem->path, buf) == -1)
 	{
-		lstat(elem->path, buf);
-		elem->st_mode = buf->st_mode;
-		if (S_ISLNK(elem->st_mode))
-			elem->sub = 0;
+		ft_error("ft_ls", elem->name, 0);
+		elem->sub = -1;
 	}
+	elem->st_mode = buf->st_mode;
+	ft_isDir(elem, entry);
+	elem->st_mode = buf->st_mode;
 	elem->st_nlink = buf->st_nlink;
 	elem->st_blocks = buf->st_blocks;
 	elem->st_rdev = buf->st_rdev;

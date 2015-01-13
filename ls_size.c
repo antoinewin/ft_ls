@@ -6,7 +6,7 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/08 14:49:31 by achauvea          #+#    #+#             */
-/*   Updated: 2015/01/08 23:16:23 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/13 10:46:33 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void	ft_calcmm(t_elem *list, t_size *size)
 {
 	int	i;
 
-	size->maj = 3;
-	size->min = 4;
 	i = 0;
 	while (list)
 	{
@@ -57,68 +55,64 @@ void	ft_calcmm(t_elem *list, t_size *size)
 	}
 }
 
-int		ft_usersize(t_elem *list)
+int		ft_usersize(t_elem *list, t_opt *opt)
 {
 	int	usersize;
 	int	i;
 
 	usersize = 0;
-	while (list->prv)
-		list = list->prv;
-	while (list->nxt)
+	while (list)
 	{
-		i = ft_strlen(list->username);
-		if (usersize < i)
-			usersize = i;
+		if (list->name[0] != '.' || (opt->a))
+		{
+			i = ft_strlen(list->username);
+			if (usersize < i)
+				usersize = i;
+		}
 		list = list->nxt;
 	}
-	i = ft_strlen(list->username);
-	if (usersize < i)
-		usersize = i;
 	return (usersize);
 }
 
-int		ft_groupsize(t_elem *list)
+int		ft_groupsize(t_elem *list, t_opt *opt)
 {
 	int	groupsize;
 	int	i;
 
 	groupsize = 0;
-	while (list->prv)
-		list = list->prv;
-	while (list->nxt)
+	while (list)
 	{
-		i = ft_strlen(list->groupname);
-		if (groupsize < i)
-			groupsize = i;
+		if (list->name[0] != '.' || (opt->a))
+		{
+			i = ft_strlen(list->groupname);
+			if (groupsize < i)
+				groupsize = i;
+		}
 		list = list->nxt;
 	}
-	i = ft_strlen(list->groupname);
-	if (groupsize < i)
-		groupsize = i;
 	return (groupsize);
 }
 
-int		ft_linksize(t_elem *list)
+int		ft_linksize(t_elem *list, t_opt *opt)
 {
 	int	maxsize;
 	int	i;
 
 	maxsize = 0;
-	while (list->nxt)
+	while (list)
 	{
-		i = ft_countnum(list->st_nlink);
-		if (maxsize < i)
-			maxsize = i;
+		if (list->name[0] != '.' || (opt->a))
+		{
+			i = ft_countnum(list->st_nlink);
+			if (maxsize < i)
+				maxsize = i;
+		}
 		list = list->nxt;
 	}
-	i = ft_countnum(list->st_nlink);
-	if (maxsize < i)
-		maxsize = i;
 	return (maxsize);
 }
 
-t_elem	*ft_maxsize(t_elem *list, t_size *size)
+t_elem	*ft_maxsize(t_elem *list, t_size *size, t_opt *opt)
 {
 	int		maxsize;
 	int		i;
@@ -128,18 +122,17 @@ t_elem	*ft_maxsize(t_elem *list, t_size *size)
 	while (list->prv)
 		list = list->prv;
 	first = list;
-	while (list->nxt)
+	while (list)
 	{
-		size->total = list->st_blocks + size->total;
-		i = ft_countnum(list->st_size);
-		if (maxsize < i)
-			maxsize = i;
+		if (list->name[0] != '.' || (opt->a))
+		{
+			size->total = list->st_blocks + size->total;
+			i = ft_countnum(list->st_size);
+			if (maxsize < i)
+				maxsize = i;
+		}
 		list = list->nxt;
 	}
-	size->total = list->st_blocks + size->total;
-	i = ft_countnum(list->st_size);
-	if (maxsize < i)
-		maxsize = i;
 	size->size = maxsize;
 	return (first);
 }
@@ -151,12 +144,11 @@ t_size	*ft_calcsize(t_elem *list, t_opt *opt)
 	size = NULL;
 	if (list && opt->l)
 	{
-		if ((size = (t_size*)ft_memalloc(sizeof(t_size))) == NULL)
-			ft_error("ft_ls", "malloc", 1);
-		list = ft_maxsize(list, size);
-		size->groupsize = ft_groupsize(list);
-		size->usersize = ft_usersize(list);
-		size->linksize = ft_linksize(list);
+		size = ft_create_size();
+		list = ft_maxsize(list, size, opt);
+		size->groupsize = ft_groupsize(list, opt);
+		size->usersize = ft_usersize(list, opt);
+		size->linksize = ft_linksize(list, opt);
 		ft_calcmm(list, size);
 	}
 	return (size);

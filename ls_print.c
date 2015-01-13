@@ -6,7 +6,7 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/27 14:48:23 by achauvea          #+#    #+#             */
-/*   Updated: 2015/01/08 13:33:10 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/13 10:17:01 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_print(t_size *size, t_elem *list, t_opt *opt)
 		if (list->sub == DT_CHR || list->sub == DT_BLK)
 			ft_print_majmin(list, size);
 		else
-			ft_print_int(size->size, list->st_size);
+			ft_print_int(list->st_size, size->size);
 		ft_print_time(list->date);
 	}
 	ft_putstr(list->name);

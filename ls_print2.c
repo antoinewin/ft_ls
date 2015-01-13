@@ -6,7 +6,7 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/08 13:12:04 by achauvea          #+#    #+#             */
-/*   Updated: 2015/01/08 14:45:34 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/13 10:17:21 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_print_permi(mode_t st_mode, int sub)
 	ft_putstr("  ");
 }
 
-void	ft_print_int(int size, unsigned int toprint)
+void	ft_print_int(unsigned int toprint, int size)
 {
 	int		n;
 
