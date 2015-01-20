@@ -6,7 +6,7 @@
 #    By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/10 08:23:40 by achauvea          #+#    #+#              #
-#    Updated: 2015/01/08 22:50:16 by achauvea         ###   ########.fr        #
+#    Updated: 2015/01/20 10:37:29 by achauvea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC		=	main.c 			\
 			ls_file.c		\
 			ls_recursive.c	\
 			ls_size.c		\
+			ls_error.c		\
 
 OBJ		= $(SRC:.c=.o)
 

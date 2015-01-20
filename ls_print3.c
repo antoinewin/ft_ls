@@ -6,7 +6,7 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/08 13:17:02 by achauvea          #+#    #+#             */
-/*   Updated: 2015/01/08 23:01:18 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/20 11:17:15 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,19 @@ void	ft_print_total(t_size *size, t_opt *opt)
 		ft_putnbr(size->total);
 		ft_putchar('\n');
 	}
+}
+
+void	ft_print_enoent(char *name)
+{
+	ft_putstr("ft_ls: ");
+	ft_errors(name, "No such file or directory", 0);
+}
+
+void	ft_print_eacces(char *path)
+{
+	ft_putchar('\n');
+	ft_putstr(path);
+	ft_putendl(":");
+	ft_putstr("ft_ls: ");
+	ft_errors(ft_istrchr(path), "Permission denied", 0);
 }

@@ -6,7 +6,7 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/17 16:28:07 by achauvea          #+#    #+#             */
-/*   Updated: 2015/01/13 12:03:53 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/20 12:37:28 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,54 +68,61 @@ int		ls_dir_list(char *path, t_opt *opt, int ac, char *name)
 	return (0);
 }
 
-int		*ls_param(int ac, int i, char **av, t_opt *opt)
+t_error	*ls_param(int ac, int i, char **av, t_opt *opt)
 {
 	DIR		*dir;
-	int		*file;
-	int		*par;
-	int		x[1];
+	t_error	*doss;
+	t_error	*errors;
 
-	x[0] = 0;
-	x[1] = 0;
-	if ((par = (int*)ft_memalloc(ac - i)) == NULL
-			|| (file = (int*)ft_memalloc(ac - i)) == NULL)
-		ft_error("ft_ls", "malloc", 1);
+	errors = ft_create_error();
+	doss = ft_create_error();
 	while (ac > i)
 	{
 		if ((dir = opendir(av[i])) == NULL)
 		{
 			if (errno == ENOTDIR)
-				file[x[1]++] = i;
+				ft_putendl("Fileattente");
+			else if (errno == EACCES || errno == ENOENT)
+				errors = ls_error(errors, av[i], 1);
+			else
+				ft_error("ft_ls", av[i], 0);
 		}
 		else
-			par[x[0]++] = i;
+			doss = ls_error(doss, av[i], 0);
 		if (dir && (closedir(dir)) == -1)
 			ft_error("ft_ls", av[i], 1);
 		i++;
 	}
-	ft_print_file(file, av, opt);
-	free(file);
-	return (par);
+	ft_print_file(errors, opt);
+	free(errors);
+	return (doss);
 }
 
 int		main(int ac, char **av)
 {
 	int		i;
-	int		y;
-	int		*par;
 	t_opt	*opt;
+	t_error	*dir;
 
 	opt = ft_create_opt();
+	dir = ft_create_error();
 	i = ls_arguments(ac, av, opt);
 	if (i > 0)
 	{
-		par = ls_param(ac, i, av, opt);
-		y = -1;
-		while (par[++y])
+		dir = ls_param(ac, i, av, opt);
+		if (opt->r)
+		{
+			ls_dir_r(dir, opt, (ac - i));
+			return (0);
+		}
+		while (dir->prv)
+			dir = dir->prv;
+		while (dir)
 		{
 			if ((ac - i) > 1)
 				ft_putchar('\n');
-			ls_dir_list(av[par[y]], opt, (ac - i), ft_istrchr(av[par[y]]));
+			ls_dir_list(dir->name, opt, (ac - i), ft_istrchr(dir->name));
+			dir = dir->nxt;
 		}
 	}
 	else

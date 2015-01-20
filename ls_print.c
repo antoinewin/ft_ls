@@ -6,7 +6,7 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/27 14:48:23 by achauvea          #+#    #+#             */
-/*   Updated: 2015/01/13 10:17:01 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/20 12:30:23 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,34 @@ void	ft_print(t_size *size, t_elem *list, t_opt *opt)
 	ft_putchar('\n');
 }
 
-void	ft_print_file(int *file, char **av, t_opt *opt)
+void	ft_print_file(t_error *errors, t_opt *opt)
 {
-	int		y;
-
-	y = -1;
-	while (file[++y])
+	while (errors->prv)
+		errors = errors->prv;
+	while (errors->erno == 2)
+	{
+		ft_print_enoent(errors->name);
+		if (errors->nxt == NULL)
+			break ;
+		errors = errors->nxt;
+	}
+	while (errors->erno == 10)
 	{
 		if (opt->l)
 		{
 			ft_putstr("-------");
-			ft_putendl(av[file[y]]);
+			ft_putendl(errors->name);
 		}
 		else
-			ft_putendl(av[file[y]]);
+			ft_putendl(errors->name);
+		errors = errors->nxt;
+	}
+	while (errors->erno == 13)
+	{
+		ft_print_eacces(errors->name);
+		if (errors->nxt == NULL)
+			break ;
+		errors = errors->nxt;
 	}
 }
 

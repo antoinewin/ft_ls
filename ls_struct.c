@@ -6,7 +6,7 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/25 13:21:04 by achauvea          #+#    #+#             */
-/*   Updated: 2015/01/13 10:25:39 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/20 10:36:30 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,20 @@ t_elem	*ft_create_elem(void)
 	list->path = NULL;
 	list->date = 0;
 	return (list);
+}
+
+t_error	*ft_create_error(void)
+{
+	t_error	*errors;
+
+	errors = NULL;
+	if ((errors = (t_error*)ft_memalloc(sizeof(t_error))) == NULL)
+		ft_error("ft_ls", "malloc", 1);
+	errors->prv = NULL;
+	errors->nxt = NULL;
+	errors->name = NULL;
+	errors->erno = 0;
+	return (errors);
 }
 
 t_size	*ft_create_size(void)

@@ -6,7 +6,7 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/27 15:37:05 by achauvea          #+#    #+#             */
-/*   Updated: 2014/11/28 13:25:18 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/20 09:45:52 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_elem	*ls_recursive_r_on(t_elem *list, t_opt *opt)
 		list = list->nxt;
 	while (list && list->prv)
 	{	
-		if ((list->sub) && ft_strcmp(list->name, "..") != 0
+		if ((list->sub == DT_DIR) && ft_strcmp(list->name, "..") != 0
 				&& ft_strcmp(list->name, ".") != 0 && list)
 		{
 			if (list->name[0] != '.' || (opt->a))
@@ -80,7 +80,7 @@ t_elem	*ls_recursive_r_off(t_elem *list, t_opt *opt)
 		list = list->prv;
 	while (list && list->nxt)
 	{
-		if ((list->sub) && ft_strcmp(list->name, "..") != 0
+		if ((list->sub == DT_DIR) && ft_strcmp(list->name, "..") != 0
 				&& ft_strcmp(list->name, ".") != 0 && list)
 		{
 			if (list->name[0] != '.' || (opt->a))
@@ -98,7 +98,7 @@ void	ls_recursive(t_elem *list, t_opt *opt)
 		list = ls_recursive_r_on(list, opt);
 	else
 		list = ls_recursive_r_off(list, opt);
-	if ((list->sub) && ft_strcmp(list->name, "..") != 0
+	if ((list->sub == DT_DIR) && ft_strcmp(list->name, "..") != 0
 			&& ft_strcmp(list->name, ".") != 0 && list)
 	{
 		if (list->name[0] != '.' || (opt->a))

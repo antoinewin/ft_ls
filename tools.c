@@ -6,11 +6,24 @@
 /*   By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/25 14:06:35 by achauvea          #+#    #+#             */
-/*   Updated: 2015/01/13 10:58:56 by achauvea         ###   ########.fr       */
+/*   Updated: 2015/01/20 12:33:19 by achauvea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+void	ls_dir_r(t_error *dir, t_opt *opt, int aci)
+{
+	while (dir->nxt)
+		dir = dir->nxt;
+	while (dir)
+	{
+		if (aci > 1)
+			ft_putchar('\n');
+		ls_dir_list(dir->name, opt, aci, ft_istrchr(dir->name));
+		dir = dir->prv;
+	}
+}
 
 int		ft_maybedir(t_elem *list)
 {
